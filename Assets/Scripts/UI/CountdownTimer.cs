@@ -40,7 +40,7 @@ public class CountdownTimer : MonoBehaviour
         int minutes = Mathf.FloorToInt(currentTime / 60); // Hitung menit
         int seconds = Mathf.FloorToInt(currentTime % 60); // Hitung detik
 
-        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds); // Perbarui teks UI dengan format 00:00
+        countdownText.text = "Time : " + string.Format("{0:00}:{1:00}", minutes, seconds); // Perbarui teks UI dengan format 00:00
     }
 
     void OnCountdownEnd()
