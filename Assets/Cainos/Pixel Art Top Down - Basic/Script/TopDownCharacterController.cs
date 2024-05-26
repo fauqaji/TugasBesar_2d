@@ -8,15 +8,15 @@ namespace Cainos.PixelArtTopDown_Basic
     {
         public float speed;
 
-        private Animator animator;
+        public Animator animator;
 
-        private void Start()
+         void Start()
         {
             animator = GetComponent<Animator>();
         }
 
 
-        private void Update()
+        void Update()
         {
             Vector2 dir = Vector2.zero;
             if (Input.GetKey(KeyCode.A))
@@ -26,7 +26,7 @@ namespace Cainos.PixelArtTopDown_Basic
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                dir.x = 1;
+                dir.x = 1; 
                 animator.SetInteger("Direction", 2);
             }
 
