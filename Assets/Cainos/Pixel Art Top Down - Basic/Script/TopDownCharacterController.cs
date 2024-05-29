@@ -21,7 +21,7 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             Vector2 dir = Vector2.zero;
             bool mov = false;
-
+            bool movKa = false;
             if (Input.GetKey(KeyCode.A))
             {
                 dir.x = -1;
@@ -40,6 +40,8 @@ namespace Cainos.PixelArtTopDown_Basic
             {
                 animator.SetBool("kiri", false);
                 animator.SetBool("kanan", false);
+                animator.SetBool("kananIdle", true);
+                animator.SetBool("kiriIdle", true);
             }
 
             if (Input.GetKey(KeyCode.W))
@@ -60,7 +62,9 @@ namespace Cainos.PixelArtTopDown_Basic
             else
             {
                 animator.SetBool("atas", false);
-                animator.SetBool("bawah", false); // Set animasi "bawah" ke false jika tombol "S" tidak ditekan
+                animator.SetBool("bawah", false);
+                animator.SetBool("atasIdle", true);
+
             }
 
             animator.SetBool("mov", mov);
