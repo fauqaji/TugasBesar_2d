@@ -14,8 +14,14 @@ public class pindahscene : MonoBehaviour
     {
         SceneManager.LoadScene("informasi");
     }
+
     public void PindahKeMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void KeluarGame()
+    {
+        Application.Quit();
     }
 }
