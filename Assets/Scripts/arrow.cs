@@ -13,6 +13,8 @@ public class arrow : MonoBehaviour
     void Start()
     {
         rb.velocity = transform.up * speed; // Menggunakan transform.up untuk 2D
+
+        Destroy(gameObject, 3f);
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo)
