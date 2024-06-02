@@ -7,9 +7,12 @@ namespace Cainos.PixelArtTopDown_Basic
     public class TopDownCharacterController : MonoBehaviour
     {
         public float speed;
+        public Transform aim; // Tambahkan ini
 
         private Animator animator;
         private Rigidbody2D rb;
+        private bool isAttacking = false;
+        private bool facingRight = true;
 
         void Start()
         {
@@ -19,57 +22,148 @@ namespace Cainos.PixelArtTopDown_Basic
 
         void Update()
         {
-            Vector2 dir = Vector2.zero;
-            bool mov = false;
-            bool movKa = false;
+            AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+            if (isAttacking)
+            {
+
+
+                if (currentState.normalizedTime >= 1.0f)
+                {
+                    if (currentState.IsName("attackHorizontal"))
+                    {
+                        isAttacking = false;
+                        animator.SetTrigger("horizontalIdle");
+                    }
+                    else if (currentState.IsName("attackBawah"))
+                        
+                    {
+
+                        isAttacking = false;
+                        animator.SetTrigger("bawahIdle");
+                    }
+                    else if (currentState.IsName("attackAtas"))
+                    {
+                        Debug.Log("babi");
+                        isAttacking = false;
+                        animator.SetTrigger("atasIdle");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+
+            Vector2 movement = Vector2.zero;
+            bool isMoving = false;
+
+            animator.SetBool("kiri", false);
+            animator.SetBool("kanan", false);
+            animator.SetBool("atas", false);
+            animator.SetBool("bawah", false);
+
             if (Input.GetKey(KeyCode.A))
             {
-                dir.x = -1;
-                animator.SetBool("kiri", true);
-                animator.SetInteger("Direction", 3);
-                mov = true;
+                movement.x = -1;
+                if (facingRight)
+                {
+                    Flip();
+                }
+                animator.SetBool("horizontal", true);
+                isMoving = true;
+
+                aim.position = transform.position + new Vector3(-1, 0, 0); // Update aim position
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                dir.x = 1;
-                animator.SetBool("kanan", true);
-                animator.SetInteger("Direction", 2);
-                mov = true;
+                movement.x = 1;
+                if (!facingRight)
+                {
+                    Flip();
+                }
+
+                animator.SetBool("horizontal", true);
+                isMoving = true;
+
+                aim.position = transform.position + new Vector3(1, 0, 0); // Update aim position
             }
             else
             {
-                animator.SetBool("kiri", false);
-                animator.SetBool("kanan", false);
-                animator.SetBool("kananIdle", true);
-                animator.SetBool("kiriIdle", true);
+                animator.SetBool("horizontal", false);
             }
 
             if (Input.GetKey(KeyCode.W))
             {
-                dir.y = 1;
+                movement.y = 1;
                 animator.SetBool("atas", true);
-                animator.SetInteger("Direction", 1);
-                mov = true;
+                isMoving = true;
+
+                aim.position = transform.position + new Vector3(0, 1, 0); // Update aim position
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                dir.y = -1;
-                animator.SetBool("bawah", true); // Set animasi "bawah" ke true
-                animator.SetInteger("Direction", 0);
-                mov = true;
-                
+                movement.y = -1;
+                animator.SetBool("bawah", true);
+                isMoving = true;
+
+                aim.position = transform.position + new Vector3(0, -1, 0); // Update aim position
             }
-            else
+            else if (!isMoving)
             {
-                animator.SetBool("atas", false);
                 animator.SetBool("bawah", false);
-                animator.SetBool("atasIdle", true);
-
+                animator.SetBool("atas", false);
             }
 
-            animator.SetBool("mov", mov);
-            dir.Normalize();
-            rb.velocity = speed * dir;
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (currentState.IsName("horizontalIdle"))
+                {
+                    resetAllTriggers();
+                    animator.SetTrigger("attackHorizontal");
+                    isAttacking = true;
+                }
+                else if (currentState.IsName("idle"))
+                {
+                    resetAllTriggers();
+                    animator.SetTrigger("attackBawah");
+                    isAttacking = true;
+                }
+                else if (currentState.IsName("atasIdle"))
+                {
+                    resetAllTriggers();
+                    animator.SetTrigger("attackAtas");
+                    isAttacking = true;
+                }
+            }
+
+            animator.SetBool("mov", isMoving);
+            movement.Normalize();
+            rb.velocity = speed * movement;
+        }
+
+        private void resetAllTriggers()
+        {
+            animator.ResetTrigger("attackHorizontal");
+            animator.ResetTrigger("attackBawah");
+            animator.ResetTrigger("attackAtas");
+
+            animator.ResetTrigger("horizontalIdle");
+            animator.ResetTrigger("bawahIdle");
+            animator.ResetTrigger("atasIdle");
+        }
+
+        private void Flip()
+        {
+            facingRight = !facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 }
