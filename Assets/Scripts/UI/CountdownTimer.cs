@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -61,5 +62,14 @@ public class CountdownTimer : MonoBehaviour
     {
         Time.timeScale = 1; // Lanjutkan game dengan mengembalikan waktu
         isPaused = false; // Set flag isPaused ke false
+    }
+    public void RestartCurrentScene()
+    {
+        Debug.Log("tesss");
+        // Dapatkan nama scene saat ini
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Muat ulang scene saat ini
+        SceneManager.LoadScene(currentSceneName);
     }
 }
