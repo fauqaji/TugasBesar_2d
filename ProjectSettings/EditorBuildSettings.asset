@@ -4,14 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 7b0ae4dce1ddea040a93a5e9d8fbafa5
-  - enabled: 1
-    path: Assets/Scenes/informasi.unity
-    guid: 4b3d52fa3bca66d40b7781099dc3a622
-  - enabled: 1
-    path: Assets/Cainos/Pixel Art Top Down - Basic/Scene/level1.unity
-    guid: 86e89bd9e4a9c5245a015cf17e3c0aae
+  m_Scenes: []
   m_configObjects: {}
