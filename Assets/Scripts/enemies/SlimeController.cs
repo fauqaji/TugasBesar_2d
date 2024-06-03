@@ -14,6 +14,11 @@ public class SlimeController : MonoBehaviour
     public float jumpForce = 5f;
     public float aoeRadius = 3f;  // Radius kecil untuk serangan AOE
     private EnemyHealth enemyHealth;
+    public float flashDuration = 0.1f; // Durasi kedip
+    public int flashCount = 5;
+    private SpriteRenderer spriteRenderer;
+    public Color damageColor = Color.red;
+
     private Animator animator;
     private Rigidbody2D rb;
     private Vector2 initialPosition;
@@ -29,6 +34,7 @@ public class SlimeController : MonoBehaviour
         initialPosition = transform.position;
         originalScale = transform.localScale;
         enemyHealth = GetComponent<EnemyHealth>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -193,6 +199,7 @@ public class SlimeController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, aoeRadius);
     }
 
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Arrow"))
@@ -210,5 +217,24 @@ public class SlimeController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+
+    public void ShowDamageEffect()
+    {
+        StartCoroutine(DamageEffect());
+    }
+
+    private IEnumerator DamageEffect()
+    {
+        Color originalColor = spriteRenderer.color;
+        for (int i = 0; i < flashCount; i++)
+        {
+            spriteRenderer.color = damageColor;
+            yield return new WaitForSeconds(flashDuration);
+            spriteRenderer.color = originalColor;
+            yield return new WaitForSeconds(flashDuration);
+        }
+    }
+
 
 }

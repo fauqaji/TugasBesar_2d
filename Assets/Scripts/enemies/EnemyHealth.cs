@@ -19,22 +19,33 @@ public class EnemyHealth : MonoBehaviour
         slimeController.TakeDamage();
         // Beritahu UIManager untuk memperbarui health bar
         EnemyHealthBar.Instance.UpdateSlimeHealth(this);
-        
+
+
         if (currentHealth <= 0)
         {
             slimeController.Die();
+
+            if (currentHealth > 0)
+            {
+                slimeController.ShowDamageEffect();
+            }
+            else if (currentHealth <= 0)
+            {
+                slimeController.Die();
+
+            }
         }
     }
+        public int GetCurrentHealth()
+        {
+            return currentHealth;
+        }
 
-    public int GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    public int GetMaxHealth()
-    {
-        return maxHealth;
-    }
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
 
 
+    
 }
