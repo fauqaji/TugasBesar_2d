@@ -127,6 +127,9 @@ MonoBehaviour:
   returnDistance: 15
   moveSpeed: 1.5
   attackCooldown: 2
+  attackDamage: 10
+  jumpForce: 5
+  aoeRadius: 3
 --- !u!95 &3932241893029936064
 Animator:
   serializedVersion: 5

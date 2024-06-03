@@ -17,16 +17,5 @@ public class arrow : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    void OnTriggerEnter2D(Collider2D hitInfo)
-    {
-        /*EnemyS enemy = hitInfo.GetComponent<EnemyS>();
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }*/
-
-        Instantiate(impactEffect, transform.position, transform.rotation);
-
-        Destroy(gameObject);
-    }
+    
 }

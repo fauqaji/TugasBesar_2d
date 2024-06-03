@@ -13,7 +13,7 @@ public class SlimeController : MonoBehaviour
     public int attackDamage = 10;
     public float jumpForce = 5f;
     public float aoeRadius = 3f;  // Radius kecil untuk serangan AOE
-
+    private EnemyHealth enemyHealth;
     private Animator animator;
     private Rigidbody2D rb;
     private Vector2 initialPosition;
@@ -28,6 +28,7 @@ public class SlimeController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         initialPosition = transform.position;
         originalScale = transform.localScale;
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Update()
@@ -121,6 +122,7 @@ public class SlimeController : MonoBehaviour
         // Flip sprite based on direction
         if (initialPosition.x > transform.position.x)
         {
+  
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
         else
@@ -146,7 +148,7 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
         ResetAllTriggers();
         animator.SetTrigger("Hurt");
@@ -190,4 +192,23 @@ public class SlimeController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, aoeRadius);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Arrow"))
+        {
+            arrow bow = other.GetComponent<arrow>();
+            if (bow != null)
+            {
+                enemyHealth.TakeDamage(bow.damage);
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
+    public void OnDeathAnimationEnd()
+    {
+        Destroy(gameObject);
+    }
+
 }
