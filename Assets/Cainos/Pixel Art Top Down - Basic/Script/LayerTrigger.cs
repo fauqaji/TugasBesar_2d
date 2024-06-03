@@ -13,15 +13,20 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            other.gameObject.layer = LayerMask.NameToLayer(layer);
-
-            other.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
-            SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach ( SpriteRenderer sr in srs)
+            // Periksa apakah objek memiliki tag "Player" atau "Enemy"
+            if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Arrow"))
             {
-                sr.sortingLayerName = sortingLayer;
+                // Ganti layer objek menjadi layer yang diinginkan
+                other.gameObject.layer = LayerMask.NameToLayer(layer);
+
+                // Ganti sorting layer objek menjadi sorting layer yang diinginkan
+                other.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
+                SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in srs)
+                {
+                    sr.sortingLayerName = sortingLayer;
+                }
             }
         }
-
     }
 }
