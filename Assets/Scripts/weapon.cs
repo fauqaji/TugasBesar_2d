@@ -16,19 +16,23 @@ public class weapon : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > delay)
+        if (!PauseMenu.isPaused)
         {
-            if (Input.GetButtonDown("Fire1"))
+            timer += Time.deltaTime;
+            if (timer > delay)
             {
-                Shoot();
-                timer = 0;
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    Shoot();
+                    timer = 0;
+                }
             }
         }
- /*       if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        }*/
+
+        /*       if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }*/
     }
 
     void Shoot()
