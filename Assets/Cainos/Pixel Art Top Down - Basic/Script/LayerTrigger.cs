@@ -14,7 +14,7 @@ namespace Cainos.PixelArtTopDown_Basic
         private void OnTriggerExit2D(Collider2D other)
         {
             // Periksa apakah objek memiliki tag "Player" atau "Enemy"
-            if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Arrow"))
+            if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Arrow") || other.CompareTag("Boss"))
             {
                 // Ganti layer objek menjadi layer yang diinginkan
                 other.gameObject.layer = LayerMask.NameToLayer(layer);

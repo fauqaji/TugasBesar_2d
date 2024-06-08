@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Arrow
+  - WallL1
+  - WallL2
+  - WallL3
+  - Boss
   layers:
   - Default
   - TransparentFX

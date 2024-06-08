@@ -5,17 +5,28 @@ using UnityEngine;
 public class arrow : MonoBehaviour
 {
     public float speed = 5f;
-    public int damage = 50;
     public Rigidbody2D rb;
     public GameObject impactEffect;
+    public int damage;
 
-    // Start is called before the first frame update
     void Start()
     {
-        rb.velocity = transform.up * speed; // Menggunakan transform.up untuk 2D
-
+        rb.velocity = transform.up * speed; // Using transform.up for 2D
         Destroy(gameObject, 3f);
     }
 
-    
+
+    public void SetDamage(int damageAmount)
+    {
+        damage = damageAmount;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("WallL1") || collision.gameObject.CompareTag("WallL2") || collision.gameObject.CompareTag("WallL3"))
+        {
+            Destroy(gameObject); // Destroy arrow gameObject
+        }
+        
+    }
 }
