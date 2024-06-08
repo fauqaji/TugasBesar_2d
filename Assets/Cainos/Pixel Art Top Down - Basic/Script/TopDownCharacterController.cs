@@ -43,7 +43,6 @@ namespace Cainos.PixelArtTopDown_Basic
                     }
                     else if (currentState.IsName("attackAtas"))
                     {
-                        Debug.Log("babi");
                         isAttacking = false;
                         animator.SetTrigger("atasIdle");
                     }

@@ -186,9 +186,17 @@ public class SlimeController : MonoBehaviour
         Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
         foreach (Collider2D collider in hitPlayers)
         {
-            if (collider.CompareTag("Player"))
+            if (collider != null && collider.CompareTag("Player"))
             {
-                collider.GetComponent<PlayerLife>().TakeDamage(attackDamage);
+                PlayerLife playerLife = collider.GetComponent<PlayerLife>();
+                if (playerLife != null)
+                {
+                    playerLife.TakeDamage(attackDamage);
+                }
+                else
+                {
+                    Debug.LogWarning("Player object does not have a PlayerLife component: " + collider.name);
+                }
             }
         }
     }

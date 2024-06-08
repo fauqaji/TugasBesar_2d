@@ -5,10 +5,12 @@ using UnityEngine;
 public class weapon : MonoBehaviour
 {
     public Transform aim;
-    public GameObject arrow;
+    public GameObject arrowPrefab; // Renamed to arrowPrefab for clarity
     public Transform player; // Tambahkan referensi ke karakter pemain
     public float delay = 1.5f;
+    public int damage; // Define damage here
     float timer;
+
     void Start()
     {
         timer = delay;
@@ -40,6 +42,9 @@ public class weapon : MonoBehaviour
         // Tentukan arah panah berdasarkan rotasi karakter
         Vector3 direction = (aim.position - player.position).normalized;
         Quaternion arrowRotation = Quaternion.LookRotation(Vector3.forward, direction);
-        Instantiate(arrow, aim.position, arrowRotation);
+        GameObject newArrow = Instantiate(arrowPrefab, aim.position, arrowRotation);
+
+        // Set the damage value for the arrow
+        newArrow.GetComponent<arrow>().SetDamage(damage);
     }
 }

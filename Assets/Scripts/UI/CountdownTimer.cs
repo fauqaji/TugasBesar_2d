@@ -86,5 +86,6 @@ public class CountdownTimer : MonoBehaviour
 
         // Muat ulang scene saat ini
         SceneManager.LoadScene(currentSceneName);
+        Time.timeScale = 1;
     }
 }
