@@ -32,6 +32,7 @@ public class PlayerLife : MonoBehaviour
         health -= damage;
         healthBar.SetHealth(health);
         StartCoroutine(DamageEffect());
+        AudioManager.Instance.PlaySFX("hurt");
     }
 
     private IEnumerator DamageEffect()

@@ -23,6 +23,7 @@ public class SlimeController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 initialPosition;
     private bool isDead = false;
+    private bool isChasing = false;
     private float attackTimer = 0f;
     private Vector3 originalScale;
     private Vector2 targetPosition;
@@ -49,15 +50,21 @@ public class SlimeController : MonoBehaviour
         }
         else if (distanceToPlayer <= chaseDistance)
         {
+            if (!isChasing)
+            {
+                isChasing = true;
+                SlimeManager.Instance.RegisterChasingSlime(this);
+            }
             ChasePlayer();
-        }
-        else if (distanceToPlayer >= chaseDistance)
-        {
-            ReturnToInitialPosition();
         }
         else
         {
-            Idle();
+            if (isChasing)
+            {
+                isChasing = false;
+                SlimeManager.Instance.UnregisterChasingSlime(this);
+            }
+            ReturnToInitialPosition();
         }
 
         attackTimer -= Time.deltaTime;
@@ -128,7 +135,6 @@ public class SlimeController : MonoBehaviour
         // Flip sprite based on direction
         if (initialPosition.x > transform.position.x)
         {
-  
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
         else
@@ -165,6 +171,8 @@ public class SlimeController : MonoBehaviour
     public void Die()
     {
         isDead = true;
+        isChasing = false;
+        SlimeManager.Instance.UnregisterChasingSlime(this);
         rb.velocity = Vector2.zero;
         ResetAllTriggers();
         animator.SetTrigger("Die");
@@ -207,7 +215,6 @@ public class SlimeController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, aoeRadius);
     }
 
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Arrow"))
@@ -226,7 +233,6 @@ public class SlimeController : MonoBehaviour
         Destroy(gameObject);
     }
 
-
     public void ShowDamageEffect()
     {
         StartCoroutine(DamageEffect());
@@ -243,6 +249,4 @@ public class SlimeController : MonoBehaviour
             yield return new WaitForSeconds(flashDuration);
         }
     }
-
-
 }

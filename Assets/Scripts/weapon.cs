@@ -46,5 +46,6 @@ public class weapon : MonoBehaviour
 
         // Set the damage value for the arrow
         newArrow.GetComponent<arrow>().SetDamage(damage);
+        AudioManager.Instance.PlaySFX("attack");
     }
 }

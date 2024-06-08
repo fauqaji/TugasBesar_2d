@@ -13,6 +13,7 @@ namespace Cainos.PixelArtTopDown_Basic
         private Rigidbody2D rb;
         private bool isAttacking = false;
         private bool facingRight = true;
+        private bool isMovingSFXPlaying = false; // Flag untuk memeriksa apakah SFX bergerak sedang dimainkan
 
         void Start()
         {
@@ -25,8 +26,6 @@ namespace Cainos.PixelArtTopDown_Basic
             AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
             if (isAttacking)
             {
-
-
                 if (currentState.normalizedTime >= 1.0f)
                 {
                     if (currentState.IsName("attackHorizontal"))
@@ -35,9 +34,7 @@ namespace Cainos.PixelArtTopDown_Basic
                         animator.SetTrigger("horizontalIdle");
                     }
                     else if (currentState.IsName("attackBawah"))
-                        
                     {
-
                         isAttacking = false;
                         animator.SetTrigger("bawahIdle");
                     }
@@ -56,7 +53,6 @@ namespace Cainos.PixelArtTopDown_Basic
                     return;
                 }
             }
-
 
             Vector2 movement = Vector2.zero;
             bool isMoving = false;
@@ -118,7 +114,17 @@ namespace Cainos.PixelArtTopDown_Basic
                 animator.SetBool("atas", false);
             }
 
-            
+            if (isMoving && !isMovingSFXPlaying)
+            {
+                AudioManager.Instance.PlaySFX("move", true); // Play the move SFX in a loop
+                isMovingSFXPlaying = true;
+            }
+            else if (!isMoving && isMovingSFXPlaying)
+            {
+                AudioManager.Instance.StopSFX(); // Stop the move SFX
+                isMovingSFXPlaying = false;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 if (currentState.IsName("horizontalIdle"))
