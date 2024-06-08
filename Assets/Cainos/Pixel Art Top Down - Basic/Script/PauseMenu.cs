@@ -27,6 +27,13 @@ public class PauseMenu : MonoBehaviour
                 PauseGame();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+
+            GoToMainMenu();
+
+
+        }
     }
 
     public void PauseGame()
@@ -45,6 +52,7 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        AudioManager.Instance.StopMusic();
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }

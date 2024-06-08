@@ -7,7 +7,7 @@ public class CountdownTimer : MonoBehaviour
     public Text countdownText; // UI Text untuk menampilkan countdown
     public float countdownTime = 240f; // Waktu countdown dalam detik
     public GameObject endGamePanel; // Panel yang akan muncul saat countdown habis
-
+    public Canvas targetCanvas;
     private float currentTime;
     private bool isPaused = false; // Flag untuk status pause
 
@@ -16,6 +16,10 @@ public class CountdownTimer : MonoBehaviour
         currentTime = countdownTime; // Atur waktu awal countdown
         UpdateCountdownText();
         endGamePanel.SetActive(false); // Sembunyikan panel pada awalnya
+        if (targetCanvas != null)
+        {
+            targetCanvas.gameObject.SetActive(false); // Ensure the canvas is hidden at the start
+        }
     }
 
     void Update()
@@ -32,6 +36,15 @@ public class CountdownTimer : MonoBehaviour
                 currentTime = 0; // Pastikan waktu tidak menjadi negatif
                 UpdateCountdownText();
                 OnCountdownEnd();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (targetCanvas != null)
+            {
+                PauseGame();
+                targetCanvas.gameObject.SetActive(true); // Show the canvas
+                AudioManager.Instance.PlayMusic("FF7"); // Play the music named "FF7"
             }
         }
     }
@@ -65,7 +78,9 @@ public class CountdownTimer : MonoBehaviour
     }
     public void RestartCurrentScene()
     {
+        AudioManager.Instance.StopMusic();
         Debug.Log("tesss");
+        targetCanvas.gameObject.SetActive(false);
         // Dapatkan nama scene saat ini
         string currentSceneName = SceneManager.GetActiveScene().name;
 
