@@ -1,9 +1,10 @@
 using UnityEngine;
-
+using System.Collections;
 public class bossManager : MonoBehaviour
 {
     public GameObject boss; // Drag and drop game object boss ke sini di Inspector
     private int enemyCount;
+
 
     void OnEnable()
     {

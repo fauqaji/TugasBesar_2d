@@ -440,6 +440,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd79245236e51d545986b39638a93857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countDmg: {fileID: 0}
+  enemyTransform: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  displayDuration: 0.6
+  moveSpeed: 50
   maxHealth: 100
   enemyHealthBar: {fileID: 0}
 --- !u!61 &5717855620991518909

@@ -26,7 +26,7 @@ public class buffer : MonoBehaviour
             if (weaponScript != null)
             {
                 Debug.Log("Weapon script found, adding damage.");
-                weaponScript.damage += 7;
+                weaponScript.damage += 32;
                 animator.SetTrigger("taken");
             }
         }

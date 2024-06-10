@@ -28,6 +28,7 @@ public class SlimeController : MonoBehaviour
     private Vector3 originalScale;
     private Vector2 targetPosition;
 
+    private SlimeBB slimeBB;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -36,6 +37,9 @@ public class SlimeController : MonoBehaviour
         originalScale = transform.localScale;
         enemyHealth = GetComponent<EnemyHealth>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        slimeBB = GetComponent<SlimeBB>(); 
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Update()
@@ -79,6 +83,11 @@ public class SlimeController : MonoBehaviour
         rb.velocity = direction * moveSpeed;
         ResetAllTriggers();
         animator.SetTrigger("Move");
+
+        if (slimeBB != null)
+        {
+            slimeBB.enabled = false;
+        }
 
         // Flip sprite based on direction
         if (player.position.x > transform.position.x)
@@ -129,7 +138,16 @@ public class SlimeController : MonoBehaviour
 
         if (Vector2.Distance(transform.position, initialPosition) <= 0.5f)
         {
+            
             Idle();
+            if (slimeBB != null)
+            {
+                slimeBB.enabled = true;
+            }
+            if (enemyHealth != null)
+            {
+                enemyHealth.UpdateCountDmgPosition(); 
+            }
         }
 
         // Flip sprite based on direction

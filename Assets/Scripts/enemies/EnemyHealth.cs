@@ -66,7 +66,7 @@ public class EnemyHealth : MonoBehaviour
         }
 
 
-    void UpdateCountDmgPosition()
+    public void UpdateCountDmgPosition()
     {
         if (enemyTransform != null)
         {
